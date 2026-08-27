@@ -1,0 +1,2 @@
+Coloca aquí únicamente los archivos webfont Toyota Type que Toyota o tu distribuidor tengan autorizados para uso web.
+Este paquete no incluye archivos de fuente.

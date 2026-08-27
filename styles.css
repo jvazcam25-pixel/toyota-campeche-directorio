@@ -1,0 +1,391 @@
+/*
+  TIPOGRAFÍA DE MARCA
+  El manual Toyota especifica Toyota Type. Si cuentas con los archivos webfont
+  autorizados, colócalos en /assets/fonts con estos nombres. No se incluyen en
+  este paquete.
+*/
+@font-face {
+  font-family: "Toyota Type";
+  src: url("assets/fonts/ToyotaType-Book.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Toyota Type";
+  src: url("assets/fonts/ToyotaType-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Toyota Type";
+  src: url("assets/fonts/ToyotaType-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --toyota-red: #EB0A1E;
+  --toyota-black: #000000;
+  --toyota-white: #FFFFFF;
+  --gray-900: #171717;
+  --gray-700: #4B4B4B;
+  --gray-500: #737373;
+  --gray-300: #D9D9D9;
+  --gray-200: #EAEAEA;
+  --gray-100: #F5F5F5;
+  --surface: #FFFFFF;
+  --shadow: 0 16px 46px rgba(0, 0, 0, .08);
+  --shadow-soft: 0 7px 22px rgba(0, 0, 0, .06);
+  --radius-xl: 26px;
+  --radius-lg: 20px;
+  --radius-md: 16px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: #F0F0F0;
+  color: var(--gray-900);
+  font-family: "Toyota Type", Arial, Helvetica, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+a { color: inherit; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+
+.page-shell {
+  width: min(100%, 960px);
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--toyota-white);
+  overflow: hidden;
+}
+
+.hero {
+  position: relative;
+  padding-bottom: 72px;
+}
+
+.hero-media {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(0,0,0,.12), rgba(0,0,0,.45)),
+    linear-gradient(120deg, #dadde0 0 20%, #cfd3d7 20% 44%, #e3e5e7 44% 100%);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 35%, rgba(0,0,0,.28));
+}
+
+.dealer-building {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  bottom: 26px;
+  height: 150px;
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,.18);
+}
+
+.building-top {
+  height: 48px;
+  background: #F7F7F7;
+  border-top: 8px solid var(--toyota-red);
+}
+
+.building-glass {
+  height: 102px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 82px, rgba(255,255,255,.45) 82px 86px),
+    linear-gradient(180deg, #40525c 0%, #6e8088 100%);
+}
+
+.photo-note {
+  position: absolute;
+  left: 24px;
+  bottom: 18px;
+  z-index: 2;
+  color: white;
+  font-size: 12px;
+  background: rgba(0,0,0,.5);
+  padding: 8px 11px;
+  border-radius: 999px;
+  backdrop-filter: blur(7px);
+}
+
+.brand-panel {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 0;
+  min-height: 142px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 26px 22px;
+  text-align: center;
+  background: rgba(255,255,255,.98);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+}
+
+.brand-kicker {
+  color: var(--toyota-red);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+
+.brand-panel h1 {
+  margin: 2px 0 3px;
+  color: var(--toyota-black);
+  font-size: clamp(32px, 8vw, 50px);
+  line-height: .98;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+.brand-panel p {
+  margin: 5px 0 0;
+  color: var(--gray-700);
+  font-size: 16px;
+}
+
+.section-card {
+  margin-inline: 6%;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 28px;
+  padding: 14px;
+}
+
+.quick-action {
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: transform .18s ease, background .18s ease;
+}
+
+.quick-action:hover { transform: translateY(-2px); background: var(--gray-100); }
+.quick-icon { color: var(--toyota-red); width: 26px; height: 26px; }
+.quick-icon.whatsapp { color: #1FAF5B; }
+
+.directory-section { padding: 52px 6% 22px; }
+
+.section-heading { text-align: center; margin-bottom: 26px; }
+.section-heading.compact { margin-bottom: 18px; }
+.eyebrow {
+  margin: 0 0 9px;
+  color: var(--toyota-red);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+.section-heading h2, .about h2 {
+  margin: 0;
+  font-size: clamp(24px, 5.7vw, 34px);
+  line-height: 1.08;
+  font-weight: 700;
+}
+.section-heading p:not(.eyebrow) { margin: 10px 0 0; color: var(--gray-700); }
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0 auto 22px;
+  padding: 0 16px;
+  height: 54px;
+  max-width: 620px;
+  border: 1px solid var(--gray-300);
+  border-radius: 999px;
+  background: var(--toyota-white);
+}
+.search-icon { color: var(--gray-500); width: 20px; height: 20px; }
+.search-box input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--gray-900); }
+
+.directory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.contact-card {
+  padding: 20px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+}
+
+.contact-top {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.department-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: white;
+  background: var(--toyota-red);
+}
+.department-icon svg { width: 24px; height: 24px; }
+
+.contact-card h3 { margin: 1px 0 5px; font-size: 19px; line-height: 1.05; }
+.person { margin: 0; font-size: 14px; font-weight: 600; }
+.role { margin: 2px 0 0; color: var(--gray-500); font-size: 13px; }
+.phone-number { margin: 12px 0 0; font-size: 14px; font-variant-numeric: tabular-nums; }
+
+.contact-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.mini-action {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid var(--gray-300);
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background .18s ease, border-color .18s ease;
+}
+.mini-action:hover { background: var(--gray-100); border-color: #bdbdbd; }
+.mini-action svg { width: 16px; height: 16px; }
+.mini-action.call, .mini-action.email { color: var(--toyota-red); }
+.mini-action.wa { color: #158948; }
+
+.empty-state { text-align: center; color: var(--gray-500); padding: 24px; }
+
+.primary-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 14px 6% 34px;
+}
+
+.button {
+  min-height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 999px;
+  text-decoration: none;
+  border: 1.5px solid var(--toyota-red);
+  font-weight: 700;
+  padding: 12px 18px;
+}
+.button svg { width: 20px; height: 20px; }
+.button-primary { background: var(--toyota-red); color: white; }
+.button-secondary { background: white; color: var(--toyota-red); }
+.button.full { width: 100%; border-radius: 14px; }
+
+.about {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  gap: 18px;
+  align-items: start;
+  padding: 26px;
+}
+.about-icon {
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #FDE7E9;
+  color: var(--toyota-red);
+}
+.about-icon svg { width: 30px; height: 30px; }
+.about h2 { font-size: 24px; }
+.about p:last-child { margin: 8px 0 0; color: var(--gray-700); line-height: 1.55; }
+
+.message-card { margin-top: 18px; padding: 28px; }
+.contact-form { display: grid; gap: 15px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.contact-form label { display: grid; gap: 7px; font-size: 13px; font-weight: 600; }
+.contact-form input, .contact-form select, .contact-form textarea {
+  width: 100%;
+  border: 1px solid var(--gray-300);
+  border-radius: 13px;
+  background: white;
+  padding: 13px 14px;
+  outline: none;
+}
+.contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { border-color: var(--toyota-red); box-shadow: 0 0 0 3px rgba(235,10,30,.08); }
+.contact-form textarea { resize: vertical; min-height: 110px; }
+
+footer { padding: 34px 6% 48px; text-align: center; color: var(--gray-700); font-size: 12px; }
+footer p { margin: 4px 0; }
+.footer-note { color: var(--gray-500); }
+
+svg { display: block; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (max-width: 700px) {
+  .page-shell { width: 100%; }
+  .hero-media { height: 238px; }
+  .hero { padding-bottom: 66px; }
+  .brand-panel { min-height: 132px; }
+  .quick-actions { grid-template-columns: repeat(2, 1fr); }
+  .quick-action { min-height: 86px; }
+  .directory-grid { grid-template-columns: 1fr; }
+  .primary-actions { grid-template-columns: 1fr; }
+  .contact-actions { grid-template-columns: repeat(3, 1fr); }
+  .form-row { grid-template-columns: 1fr; }
+  .about { grid-template-columns: 50px 1fr; padding: 22px; }
+  .about-icon { width: 50px; height: 50px; }
+}
+
+@media (max-width: 390px) {
+  .section-card, .directory-section, .primary-actions { margin-inline: 4%; padding-left: 0; padding-right: 0; }
+  .directory-section { padding-left: 4%; padding-right: 4%; }
+  .section-card { margin-left: 4%; margin-right: 4%; }
+  .quick-actions { margin-left: 4%; margin-right: 4%; padding: 10px; }
+  .primary-actions { padding-left: 4%; padding-right: 4%; }
+  .contact-card { padding: 17px; }
+  .mini-action { font-size: 11px; }
+}
