@@ -7,13 +7,15 @@
   const iconPaths = {
     location: '<path d="M12 21s6-5.1 6-11a6 6 0 1 0-12 0c0 5.9 6 11 6 11Z"/><circle cx="12" cy="10" r="2.2"/>',
     phone: '<path d="M7.2 3.8 4.8 5.1c-.7.4-1 1.2-.7 1.9 2.1 5.4 6.4 9.7 11.8 11.8.7.3 1.5 0 1.9-.7l1.3-2.4c.3-.6.2-1.4-.4-1.8l-3-2.2c-.5-.4-1.2-.3-1.7.1l-1.5 1.4a13 13 0 0 1-5.6-5.6l1.4-1.5c.4-.5.5-1.2.1-1.7l-2.2-3c-.4-.6-1.2-.7-1.8-.4Z"/>',
-    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/>',
+    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="M8 14h3M8 17h6"/>',
     globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.2 2.4 3.3 5.4 3.3 9S14.2 18.6 12 21M12 3C9.8 5.4 8.7 8.4 8.7 12s1.1 6.6 3.3 9"/>',
     car: '<path d="m5 16 1.5-5.4A2.2 2.2 0 0 1 8.6 9h6.8a2.2 2.2 0 0 1 2.1 1.6L19 16"/><path d="M4 16h16v3a1 1 0 0 1-1 1h-1v-2H6v2H5a1 1 0 0 1-1-1v-3Z"/><circle cx="7" cy="16" r="1"/><circle cx="17" cy="16" r="1"/>',
     wrench: '<path d="M14.7 6.3a4.2 4.2 0 0 0-5-5L12 3.6 9.6 6 7.3 3.7a4.2 4.2 0 0 0 5 5L5 16a2.1 2.1 0 1 0 3 3l7.3-7.3a4.2 4.2 0 0 0-.6-5.4Z"/>',
     building: '<path d="M4 21V6l8-3v18M12 8h8v13M2 21h20"/><path d="M7 9h2M7 13h2M7 17h2M15 12h2M15 16h2"/>',
     mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
     whatsapp: '<path d="M20 11.6a8 8 0 0 1-11.8 7l-4.2 1.1 1.1-4A8 8 0 1 1 20 11.6Z"/><path d="M9 8.3c.4 2.3 2.3 4.2 4.6 4.7"/>',
+    headset: '<path d="M4 13v-1a8 8 0 0 1 16 0v1"/><path d="M4 13h3v6H5a1 1 0 0 1-1-1v-5ZM20 13h-3v6h2a1 1 0 0 0 1-1v-5Z"/><path d="M17 19c0 1.1-1.8 2-4 2h-1"/>',
+    facebook: '<path d="M13.5 21v-8h2.8l.4-3h-3.2V8.1c0-.9.3-1.6 1.7-1.6H17V3.8c-.3 0-1.4-.1-2.6-.1-2.6 0-4.4 1.6-4.4 4.5V10H7v3h3v8h3.5Z" fill="currentColor" stroke="none"/>',
     back: '<path d="m15 18-6-6 6-6"/>',
     arrow: '<path d="m9 18 6-6-6-6"/>',
     user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'
@@ -72,10 +74,11 @@
 
   function contactCard(contact) {
     const hasPhone = Boolean(contact.phone);
+    const cardIcon = contact.icon || "user";
 
     return `
       <article class="contact-card" id="contact-${esc(contact.id)}">
-        <div class="contact-avatar">${icon("user")}</div>
+        <div class="contact-avatar">${icon(cardIcon)}</div>
         <div class="contact-copy">
           <p class="contact-role">${esc(contact.role)}</p>
           <h4>${esc(contact.person)}</h4>
@@ -89,34 +92,41 @@
   function groupBlock(group) {
     const contacts = group.contacts || [];
     const nested = group.nestedGroups || [];
+    const total = contacts.length + nested.reduce((sum, item) => sum + (item.contacts?.length || 0), 0);
 
     return `
       <section class="department-group" id="group-${esc(group.id)}">
         <div class="group-heading">
           <h3>${esc(group.title)}</h3>
-          <span>${contacts.length + nested.reduce((sum, item) => sum + (item.contacts?.length || 0), 0)} contacto${contacts.length === 1 && !nested.length ? "" : "s"}</span>
+          <span>${total} contacto${total === 1 ? "" : "s"}</span>
         </div>
 
-        <div class="contacts-grid">
-          ${contacts.map(contactCard).join("")}
-        </div>
-
-        ${nested.map(item => `
-          <div class="nested-group">
-            <div class="nested-heading">
-              <h4>${esc(item.title)}</h4>
-              <span>${item.contacts.length} espacios</span>
-            </div>
-            <div class="advisor-grid">
-              ${item.contacts.map(contactCard).join("")}
-            </div>
+        ${contacts.length ? `
+          <div class="contacts-grid">
+            ${contacts.map(contactCard).join("")}
           </div>
-        `).join("")}
+        ` : ""}
+
+        ${nested.map(item => {
+          const itemCount = item.contacts?.length || 0;
+          const countLabel = item.countLabel || `${itemCount} contacto${itemCount === 1 ? "" : "s"}`;
+          return `
+            <div class="nested-group" id="nested-${esc(item.id)}">
+              <div class="nested-heading">
+                <h4>${esc(item.title)}</h4>
+                <span>${esc(countLabel)}</span>
+              </div>
+              <div class="advisor-grid">
+                ${(item.contacts || []).map(contactCard).join("")}
+              </div>
+            </div>
+          `;
+        }).join("")}
       </section>
     `;
   }
 
-  function renderHome() {
+  function renderHome({ historyMode = "replace" } = {}) {
     document.title = "Toyota Campeche · Directorio de atención";
     app.innerHTML = `
       <section class="home-intro">
@@ -152,11 +162,16 @@
       button.addEventListener("click", () => renderArea(button.dataset.area));
     });
 
-    history.replaceState({ view: "home" }, "", location.pathname + location.search);
+    if (historyMode === "push") {
+      history.pushState({ view: "home" }, "", location.pathname + location.search);
+    } else if (historyMode === "replace") {
+      history.replaceState({ view: "home" }, "", location.pathname + location.search);
+    }
+
     window.scrollTo({ top: Math.max(0, app.offsetTop - 16), behavior: "smooth" });
   }
 
-  function renderArea(areaId, contactId = null) {
+  function renderArea(areaId, contactId = null, { historyMode = "push" } = {}) {
     const area = data.areas.find(item => item.id === areaId);
     if (!area) return renderHome();
 
@@ -183,8 +198,13 @@
       </div>
     `;
 
-    document.getElementById("back-home").addEventListener("click", renderHome);
-    history.pushState({ view: "area", areaId }, "", `#${areaId}`);
+    document.getElementById("back-home").addEventListener("click", () => renderHome({ historyMode: "push" }));
+
+    if (historyMode === "push") {
+      history.pushState({ view: "area", areaId }, "", `#${areaId}`);
+    } else if (historyMode === "replace") {
+      history.replaceState({ view: "area", areaId }, "", `#${areaId}`);
+    }
 
     requestAnimationFrame(() => {
       if (contactId) {
@@ -200,32 +220,87 @@
     });
   }
 
+  function renderAppointments({ historyMode = "push" } = {}) {
+    const appointments = data.appointments || [];
+    document.title = "Citas · Toyota Campeche";
+
+    app.innerHTML = `
+      <section class="area-header appointments-header">
+        <button class="back-button" type="button" id="back-home">
+          ${icon("back")}
+          <span>Volver a áreas</span>
+        </button>
+        <div class="area-header-main">
+          <span class="area-header-icon">${icon("calendar")}</span>
+          <div>
+            <p class="eyebrow">TOYOTA CAMPECHE</p>
+            <h2>Citas</h2>
+            <p>Selecciona el tipo de cita que deseas realizar.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="department-group appointment-section">
+        <div class="group-heading">
+          <h3>Tipo de cita</h3>
+          <span>${appointments.length} opciones</span>
+        </div>
+        <div class="contacts-grid appointment-grid">
+          ${appointments.map(contactCard).join("")}
+        </div>
+      </section>
+    `;
+
+    document.getElementById("back-home").addEventListener("click", () => renderHome({ historyMode: "push" }));
+
+    if (historyMode === "push") {
+      history.pushState({ view: "appointments" }, "", "#citas");
+    } else if (historyMode === "replace") {
+      history.replaceState({ view: "appointments" }, "", "#citas");
+    }
+
+    window.scrollTo({ top: Math.max(0, app.offsetTop - 16), behavior: "smooth" });
+  }
+
   function setupQuickActions() {
     document.getElementById("quick-location").href = data.agency.mapsUrl;
     document.getElementById("quick-web").href = data.agency.website;
+    document.getElementById("quick-facebook").href = data.agency.facebook;
+
+    document.querySelectorAll(".quick-icon[data-icon]").forEach(container => {
+      container.innerHTML = icon(container.dataset.icon);
+    });
 
     document.querySelectorAll("[data-jump-area]").forEach(button => {
       button.addEventListener("click", () => {
         renderArea(button.dataset.jumpArea, button.dataset.jumpContact || null);
       });
     });
+
+    document.querySelectorAll("[data-open-appointments]").forEach(button => {
+      button.addEventListener("click", () => renderAppointments());
+    });
   }
 
   window.addEventListener("popstate", () => {
     const hash = location.hash.replace("#", "");
-    if (hash && data.areas.some(area => area.id === hash)) {
-      renderArea(hash);
+    if (hash === "citas") {
+      renderAppointments({ historyMode: "none" });
+    } else if (hash && data.areas.some(area => area.id === hash)) {
+      renderArea(hash, null, { historyMode: "none" });
     } else {
-      renderHome();
+      renderHome({ historyMode: "none" });
     }
   });
 
   setupQuickActions();
 
-  const initialArea = location.hash.replace("#", "");
-  if (initialArea && data.areas.some(area => area.id === initialArea)) {
-    renderArea(initialArea);
+  const initialView = location.hash.replace("#", "");
+  if (initialView === "citas") {
+    renderAppointments({ historyMode: "replace" });
+  } else if (initialView && data.areas.some(area => area.id === initialView)) {
+    renderArea(initialView, null, { historyMode: "replace" });
   } else {
-    renderHome();
+    renderHome({ historyMode: "replace" });
   }
 })();

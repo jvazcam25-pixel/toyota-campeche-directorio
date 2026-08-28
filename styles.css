@@ -120,11 +120,11 @@ svg {
   box-shadow: var(--shadow);
 }
 
-.brand-kicker {
-  color: var(--toyota-red);
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: .06em;
+.brand-logo {
+  width: 112px;
+  height: auto;
+  display: block;
+  margin: 0 0 7px;
 }
 
 .brand-panel h1 {
@@ -151,7 +151,7 @@ svg {
 
 .quick-actions {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 10px;
   margin: 28px 6% 0;
   padding: 14px;
@@ -503,6 +503,7 @@ footer p { margin: 4px 0; }
   .brand-panel { min-height: 132px; }
   .quick-actions { grid-template-columns: repeat(2, 1fr); }
   .quick-action { min-height: 84px; }
+  .quick-action-facebook { grid-column: 1 / -1; min-height: 70px; }
   .app-view { padding-top: 44px; }
   .area-grid { grid-template-columns: 1fr; }
   .area-card {
@@ -536,4 +537,42 @@ footer p { margin: 4px 0; }
   .area-header-icon { width: 56px; height: 56px; font-size: 26px; }
   .home-note { grid-template-columns: 48px 1fr; padding: 20px; }
   .home-note-icon { width: 48px; height: 48px; font-size: 23px; }
+}
+
+/* V3: iconos visibles en los accesos rápidos */
+.quick-icon {
+  display: grid;
+  place-items: center;
+}
+
+.quick-icon svg {
+  width: 27px;
+  height: 27px;
+}
+
+/* V3: vista de Citas */
+.appointment-section {
+  margin-top: 22px;
+}
+
+.appointment-grid .contact-card {
+  min-height: 176px;
+}
+
+@media (max-width: 640px) {
+  .appointment-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* V4: Facebook y logotipo en portada */
+.quick-action-facebook .quick-icon {
+  color: #1877F2;
+}
+
+@media (min-width: 761px) {
+  .quick-action-facebook {
+    grid-column: auto;
+  }
 }

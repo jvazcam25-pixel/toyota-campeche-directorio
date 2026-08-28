@@ -3,24 +3,55 @@
   Todos los datos de esta versión son ficticios.
 
   Reglas de contacto solicitadas:
-  - Recepción y Citas: WhatsApp + teléfono + correo.
+  - Recepción, Cita de Servicio y Cita de Ventas: WhatsApp + teléfono + correo.
   - Gerente de Atención a Clientes: teléfono + correo.
+  - Asesores de Venta: teléfono + WhatsApp + correo.
   - Todos los demás: solo correo.
 */
 
-const asesorVenta = (numero) => ({
-  id: `asesor-${String(numero).padStart(2, "0")}`,
-  role: `Asesor de Venta ${String(numero).padStart(2, "0")}`,
-  person: `Nombre del asesor ${String(numero).padStart(2, "0")}`,
-  email: `asesor${String(numero).padStart(2, "0")}@ejemplo.com`
-});
+const asesorVenta = (numero) => {
+  const consecutivo = String(numero).padStart(2, "0");
+  const telefono = `98100001${consecutivo}`;
+
+  return {
+    id: `asesor-${consecutivo}`,
+    role: `Asesor de Venta ${consecutivo}`,
+    person: `Nombre del asesor ${consecutivo}`,
+    phone: telefono,
+    whatsapp: telefono,
+    email: `asesor${consecutivo}@ejemplo.com`
+  };
+};
+
+const citaVentas = {
+  id: "cita-ventas",
+  role: "Cita de Ventas",
+  person: "Asesor de citas de ventas",
+  phone: "9811231012",
+  whatsapp: "9811231012",
+  email: "citas.ventas@ejemplo.com",
+  icon: "calendar"
+};
+
+const citaServicio = {
+  id: "cita-servicio",
+  role: "Cita de Servicio",
+  person: "Mariana Torres",
+  phone: "9811231011",
+  whatsapp: "9811231011",
+  email: "citas.servicio@ejemplo.com",
+  icon: "calendar"
+};
 
 window.TOYOTA_CAMPECHE_DATA = {
   agency: {
     name: "Toyota Campeche",
-    website: "https://www.toyotacampeche.com.mx/",
-    mapsUrl: "https://maps.google.com/?q=Toyota+Campeche"
+    website: "https://www.toyota.mx/",
+    mapsUrl: "https://maps.google.com/?q=Toyota+Campeche",
+    facebook: "https://www.facebook.com/toyotacampeche"
   },
+
+  appointments: [citaServicio, citaVentas],
 
   areas: [
     {
@@ -69,8 +100,15 @@ window.TOYOTA_CAMPECHE_DATA = {
           ],
           nestedGroups: [
             {
+              id: "citas-ventas",
+              title: "Citas",
+              countLabel: "Cita de Ventas",
+              contacts: [citaVentas]
+            },
+            {
               id: "asesores-venta",
               title: "Asesores de Venta",
+              countLabel: "13 espacios",
               contacts: Array.from({ length: 13 }, (_, index) => asesorVenta(index + 1))
             }
           ]
@@ -96,12 +134,6 @@ window.TOYOTA_CAMPECHE_DATA = {
               role: "Gerente Administrativo",
               person: "C.P. María Hernández",
               email: "administracion.comercial@ejemplo.com"
-            },
-            {
-              id: "caja",
-              role: "Caja",
-              person: "Laura Castillo",
-              email: "caja@ejemplo.com"
             }
           ]
         }
@@ -143,18 +175,18 @@ window.TOYOTA_CAMPECHE_DATA = {
               email: "refacciones@ejemplo.com"
             },
             {
-              id: "citas",
-              role: "Citas",
-              person: "Mariana Torres",
-              phone: "9811231011",
-              whatsapp: "9811231011",
-              email: "citas@ejemplo.com"
-            },
-            {
               id: "garantias",
               role: "Garantías",
               person: "Daniel Ruiz",
               email: "garantias@ejemplo.com"
+            }
+          ],
+          nestedGroups: [
+            {
+              id: "citas-servicio",
+              title: "Citas",
+              countLabel: "Cita de Servicio",
+              contacts: [citaServicio]
             }
           ]
         }
