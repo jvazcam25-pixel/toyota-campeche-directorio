@@ -1,20 +1,36 @@
-# Toyota Campeche · Directorio digital V4
+# Toyota Campeche · Directorio V5
 
-Versión unificada con los ajustes solicitados.
+Cambios incluidos en esta versión:
 
-## Cambios incluidos
+- Rediseño más limpio y compacto para móvil.
+- Logo en portada preparado como **JPG** (`assets/toyota-logo.jpg`).
+- Accesos rápidos: Ubicación, Atención, Citas, Sitio web y Facebook.
+- Barra inferior fija en móvil: **Citas | Atención | Facebook**.
+- Sección independiente de **Asesores de Venta** con 13 tarjetas.
+- En Área Comercial se agregó un acceso directo para abrir la pestaña de Asesores.
+- Sección final con horarios de **Ventas, Servicio y Refacciones**.
 
-- La pantalla principal muestra **Atención a clientes** en lugar de Recepción y dirige al contacto del Gerente de Atención a Clientes.
-- Se agregó acceso directo a **Facebook**: https://www.facebook.com/toyotacampeche
-- Se eliminó **Caja** de Administración Comercial.
-- En la portada, la palabra TOYOTA fue sustituida por un logotipo gráfico ubicado en `assets/toyota-logo.svg`.
-- Los 13 asesores de venta ahora incluyen teléfono, WhatsApp y correo editables.
-- Se conservan Cita de Servicio y Cita de Ventas, además de los iconos de Ubicación, Citas y Sitio web.
+## Archivos principales
 
-## Editar datos
+- `index.html`
+- `styles.css`
+- `data.js`
+- `app.js`
+- `assets/agencia.jpg`
+- `assets/toyota-logo.jpg`
 
-Modifica `data.js`. Los asesores se generan con la función `asesorVenta(numero)`. Puedes sustituir el teléfono, WhatsApp, nombre y correo por datos reales.
+## Qué editar normalmente
 
-## Publicar
+Abre `data.js` y cambia:
+- nombres
+- teléfonos
+- WhatsApp
+- correos
 
-Sustituye en GitHub `index.html`, `styles.css`, `data.js` y `app.js`, y agrega/actualiza `assets/toyota-logo.svg`. Vercel desplegará automáticamente los cambios.
+## Reemplazar el logo
+
+Si ya cuentas con el archivo oficial, sustituye:
+
+`assets/toyota-logo.jpg`
+
+por tu versión final, conservando el mismo nombre.

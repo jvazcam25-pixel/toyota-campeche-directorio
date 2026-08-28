@@ -3,8 +3,8 @@
   Todos los datos de esta versión son ficticios.
 
   Reglas de contacto solicitadas:
-  - Recepción, Cita de Servicio y Cita de Ventas: WhatsApp + teléfono + correo.
-  - Gerente de Atención a Clientes: teléfono + correo.
+  - Atención a Clientes: teléfono + correo.
+  - Cita de Servicio y Cita de Ventas: WhatsApp + teléfono + correo.
   - Asesores de Venta: teléfono + WhatsApp + correo.
   - Todos los demás: solo correo.
 */
@@ -22,6 +22,8 @@ const asesorVenta = (numero) => {
     email: `asesor${consecutivo}@ejemplo.com`
   };
 };
+
+const salesAdvisors = Array.from({ length: 13 }, (_, index) => asesorVenta(index + 1));
 
 const citaVentas = {
   id: "cita-ventas",
@@ -51,6 +53,7 @@ window.TOYOTA_CAMPECHE_DATA = {
     facebook: "https://www.facebook.com/toyotacampeche"
   },
 
+  advisors: salesAdvisors,
   appointments: [citaServicio, citaVentas],
 
   areas: [
@@ -83,19 +86,12 @@ window.TOYOTA_CAMPECHE_DATA = {
               email: "gerencia.ventas@ejemplo.com"
             },
             {
-              id: "recepcion",
-              role: "Recepción",
-              person: "Ana López",
-              phone: "9811231004",
-              whatsapp: "9811231004",
-              email: "recepcion@ejemplo.com"
-            },
-            {
               id: "gerente-atencion-clientes",
               role: "Gerente de Atención a Clientes",
               person: "Andrea Morales",
               phone: "9811231008",
-              email: "atencion.clientes@ejemplo.com"
+              email: "atencion.clientes@ejemplo.com",
+              icon: "headset"
             }
           ],
           nestedGroups: [
@@ -104,12 +100,16 @@ window.TOYOTA_CAMPECHE_DATA = {
               title: "Citas",
               countLabel: "Cita de Ventas",
               contacts: [citaVentas]
-            },
+            }
+          ],
+          links: [
             {
-              id: "asesores-venta",
+              id: "ver-asesores",
               title: "Asesores de Venta",
-              countLabel: "13 espacios",
-              contacts: Array.from({ length: 13 }, (_, index) => asesorVenta(index + 1))
+              description: "Abre el directorio de los 13 asesores de venta.",
+              countLabel: "13 asesores",
+              icon: "team",
+              view: "advisors"
             }
           ]
         },

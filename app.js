@@ -18,12 +18,11 @@
     facebook: '<path d="M13.5 21v-8h2.8l.4-3h-3.2V8.1c0-.9.3-1.6 1.7-1.6H17V3.8c-.3 0-1.4-.1-2.6-.1-2.6 0-4.4 1.6-4.4 4.5V10H7v3h3v8h3.5Z" fill="currentColor" stroke="none"/>',
     back: '<path d="m15 18-6-6 6-6"/>',
     arrow: '<path d="m9 18 6-6-6-6"/>',
-    user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'
+    user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+    team: '<circle cx="9" cy="9" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3.5 20a6 6 0 0 1 11 0"/><path d="M14 20a4.7 4.7 0 0 1 6.5-4.3"/>'
   };
 
-  const icon = (name, className = "") => `
-    <svg class="${className}" viewBox="0 0 24 24" aria-hidden="true">${iconPaths[name] || iconPaths.user}</svg>
-  `;
+  const icon = (name, className = "") => `<svg class="${className}" viewBox="0 0 24 24" aria-hidden="true">${iconPaths[name] || iconPaths.user}</svg>`;
 
   const esc = (value = "") => String(value)
     .replaceAll("&", "&amp;")
@@ -32,7 +31,7 @@
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 
-  const cleanPhone = (phone = "") => phone.replace(/\D/g, "");
+  const cleanPhone = (phone = "") => String(phone).replace(/\D/g, "");
   const formatPhone = (phone = "") => {
     const p = cleanPhone(phone);
     if (p.length === 10) return `${p.slice(0, 3)} ${p.slice(3, 6)} ${p.slice(6)}`;
@@ -73,25 +72,37 @@
   }
 
   function contactCard(contact) {
-    const hasPhone = Boolean(contact.phone);
     const cardIcon = contact.icon || "user";
-
     return `
       <article class="contact-card" id="contact-${esc(contact.id)}">
         <div class="contact-avatar">${icon(cardIcon)}</div>
         <div class="contact-copy">
           <p class="contact-role">${esc(contact.role)}</p>
           <h4>${esc(contact.person)}</h4>
-          ${hasPhone ? `<p class="contact-phone">${esc(formatPhone(contact.phone))}</p>` : ""}
+          ${contact.phone ? `<p class="contact-phone">${esc(formatPhone(contact.phone))}</p>` : ""}
           <div class="contact-actions">${contactActions(contact)}</div>
         </div>
       </article>
     `;
   }
 
+  function linkCard(link) {
+    return `
+      <button class="link-card" type="button" data-view="${esc(link.view)}">
+        <span class="link-card-icon">${icon(link.icon || "arrow")}</span>
+        <span class="link-card-copy">
+          <strong>${esc(link.title)}</strong>
+          <small>${esc(link.description || "")}</small>
+        </span>
+        <span class="link-card-count">${esc(link.countLabel || "")}</span>
+      </button>
+    `;
+  }
+
   function groupBlock(group) {
     const contacts = group.contacts || [];
     const nested = group.nestedGroups || [];
+    const links = group.links || [];
     const total = contacts.length + nested.reduce((sum, item) => sum + (item.contacts?.length || 0), 0);
 
     return `
@@ -101,9 +112,15 @@
           <span>${total} contacto${total === 1 ? "" : "s"}</span>
         </div>
 
-        ${contacts.length ? `
-          <div class="contacts-grid">
-            ${contacts.map(contactCard).join("")}
+        ${contacts.length ? `<div class="contacts-grid">${contacts.map(contactCard).join("")}</div>` : ""}
+
+        ${links.length ? `
+          <div class="shortcut-group">
+            <div class="nested-heading">
+              <h4>Accesos</h4>
+              <span>${links.length} opción${links.length === 1 ? "" : "es"}</span>
+            </div>
+            <div class="link-card-grid">${links.map(linkCard).join("")}</div>
           </div>
         ` : ""}
 
@@ -116,9 +133,7 @@
                 <h4>${esc(item.title)}</h4>
                 <span>${esc(countLabel)}</span>
               </div>
-              <div class="advisor-grid">
-                ${(item.contacts || []).map(contactCard).join("")}
-              </div>
+              <div class="advisor-grid">${(item.contacts || []).map(contactCard).join("")}</div>
             </div>
           `;
         }).join("")}
@@ -127,6 +142,11 @@
   }
 
   function renderHome({ historyMode = "replace" } = {}) {
+    const homeCards = [
+      ...data.areas.map(area => ({ type: "area", id: area.id, name: area.name, subtitle: area.subtitle, icon: area.icon })),
+      { type: "view", id: "advisors", name: "Asesores de Venta", subtitle: "Directorio completo de los 13 asesores de venta", icon: "team" }
+    ];
+
     document.title = "Toyota Campeche · Directorio de atención";
     app.innerHTML = `
       <section class="home-intro">
@@ -136,12 +156,12 @@
       </section>
 
       <section class="area-grid">
-        ${data.areas.map(area => `
-          <button class="area-card" type="button" data-area="${esc(area.id)}">
-            <span class="area-icon">${icon(area.icon)}</span>
+        ${homeCards.map(card => `
+          <button class="area-card" type="button" data-type="${card.type}" data-target="${esc(card.id)}">
+            <span class="area-icon">${icon(card.icon)}</span>
             <span class="area-copy">
-              <strong>${esc(area.name)}</strong>
-              <small>${esc(area.subtitle)}</small>
+              <strong>${esc(card.name)}</strong>
+              <small>${esc(card.subtitle)}</small>
             </span>
             <span class="area-arrow">${icon("arrow")}</span>
           </button>
@@ -153,13 +173,19 @@
         <div>
           <p class="eyebrow">TOYOTA CAMPECHE</p>
           <h3>Encuentra al área correcta más rápido</h3>
-          <p>Cada apartado muestra únicamente los medios de contacto disponibles para ese puesto.</p>
+          <p>Usa los accesos rápidos o entra a cada área para ver solo la información relevante.</p>
         </div>
       </section>
     `;
 
-    app.querySelectorAll("[data-area]").forEach(button => {
-      button.addEventListener("click", () => renderArea(button.dataset.area));
+    app.querySelectorAll("[data-target]").forEach(button => {
+      button.addEventListener("click", () => {
+        if (button.dataset.type === "view" && button.dataset.target === "advisors") {
+          renderAdvisors();
+          return;
+        }
+        renderArea(button.dataset.target);
+      });
     });
 
     if (historyMode === "push") {
@@ -168,7 +194,7 @@
       history.replaceState({ view: "home" }, "", location.pathname + location.search);
     }
 
-    window.scrollTo({ top: Math.max(0, app.offsetTop - 16), behavior: "smooth" });
+    window.scrollTo({ top: Math.max(0, app.offsetTop - 20), behavior: "smooth" });
   }
 
   function renderArea(areaId, contactId = null, { historyMode = "push" } = {}) {
@@ -176,13 +202,9 @@
     if (!area) return renderHome();
 
     document.title = `${area.name} · Toyota Campeche`;
-
     app.innerHTML = `
       <section class="area-header">
-        <button class="back-button" type="button" id="back-home">
-          ${icon("back")}
-          <span>Volver a áreas</span>
-        </button>
+        <button class="back-button" type="button" id="back-home">${icon("back")}<span>Volver a áreas</span></button>
         <div class="area-header-main">
           <span class="area-header-icon">${icon(area.icon)}</span>
           <div>
@@ -193,12 +215,13 @@
         </div>
       </section>
 
-      <div class="area-content">
-        ${area.groups.map(groupBlock).join("")}
-      </div>
+      <div class="area-content">${area.groups.map(groupBlock).join("")}</div>
     `;
 
     document.getElementById("back-home").addEventListener("click", () => renderHome({ historyMode: "push" }));
+    app.querySelectorAll(".link-card[data-view='advisors']").forEach(button => {
+      button.addEventListener("click", () => renderAdvisors());
+    });
 
     if (historyMode === "push") {
       history.pushState({ view: "area", areaId }, "", `#${areaId}`);
@@ -216,7 +239,7 @@
           return;
         }
       }
-      window.scrollTo({ top: Math.max(0, app.offsetTop - 16), behavior: "smooth" });
+      window.scrollTo({ top: Math.max(0, app.offsetTop - 20), behavior: "smooth" });
     });
   }
 
@@ -226,10 +249,7 @@
 
     app.innerHTML = `
       <section class="area-header appointments-header">
-        <button class="back-button" type="button" id="back-home">
-          ${icon("back")}
-          <span>Volver a áreas</span>
-        </button>
+        <button class="back-button" type="button" id="back-home">${icon("back")}<span>Volver a áreas</span></button>
         <div class="area-header-main">
           <span class="area-header-icon">${icon("calendar")}</span>
           <div>
@@ -245,9 +265,7 @@
           <h3>Tipo de cita</h3>
           <span>${appointments.length} opciones</span>
         </div>
-        <div class="contacts-grid appointment-grid">
-          ${appointments.map(contactCard).join("")}
-        </div>
+        <div class="contacts-grid appointment-grid">${appointments.map(contactCard).join("")}</div>
       </section>
     `;
 
@@ -259,22 +277,58 @@
       history.replaceState({ view: "appointments" }, "", "#citas");
     }
 
-    window.scrollTo({ top: Math.max(0, app.offsetTop - 16), behavior: "smooth" });
+    window.scrollTo({ top: Math.max(0, app.offsetTop - 20), behavior: "smooth" });
+  }
+
+  function renderAdvisors({ historyMode = "push" } = {}) {
+    const advisors = data.advisors || [];
+    document.title = "Asesores de Venta · Toyota Campeche";
+
+    app.innerHTML = `
+      <section class="area-header advisors-header">
+        <button class="back-button" type="button" id="back-commercial">${icon("back")}<span>Volver a área comercial</span></button>
+        <div class="area-header-main">
+          <span class="area-header-icon">${icon("team")}</span>
+          <div>
+            <p class="eyebrow">TOYOTA CAMPECHE</p>
+            <h2>Asesores de Venta</h2>
+            <p>Consulta y edita los datos de los 13 asesores desde esta sección.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="department-group appointment-section">
+        <div class="group-heading">
+          <h3>Directorio de asesores</h3>
+          <span>${advisors.length} asesores</span>
+        </div>
+        <div class="advisor-grid advisors-page-grid">${advisors.map(contactCard).join("")}</div>
+      </section>
+    `;
+
+    document.getElementById("back-commercial").addEventListener("click", () => renderArea("comercial", null, { historyMode: "push" }));
+
+    if (historyMode === "push") {
+      history.pushState({ view: "advisors" }, "", "#asesores");
+    } else if (historyMode === "replace") {
+      history.replaceState({ view: "advisors" }, "", "#asesores");
+    }
+
+    window.scrollTo({ top: Math.max(0, app.offsetTop - 20), behavior: "smooth" });
   }
 
   function setupQuickActions() {
     document.getElementById("quick-location").href = data.agency.mapsUrl;
     document.getElementById("quick-web").href = data.agency.website;
     document.getElementById("quick-facebook").href = data.agency.facebook;
+    document.getElementById("mobile-facebook").href = data.agency.facebook;
 
-    document.querySelectorAll(".quick-icon[data-icon]").forEach(container => {
+    document.querySelectorAll(".quick-icon[data-icon], .mobile-bar-icon[data-icon]").forEach(container => {
       container.innerHTML = icon(container.dataset.icon);
     });
 
     document.querySelectorAll("[data-jump-area]").forEach(button => {
-      button.addEventListener("click", () => {
-        renderArea(button.dataset.jumpArea, button.dataset.jumpContact || null);
-      });
+      button.addEventListener("click", () => renderArea(button.dataset.jumpArea, button.dataset.jumpContact || null));
     });
 
     document.querySelectorAll("[data-open-appointments]").forEach(button => {
@@ -286,6 +340,8 @@
     const hash = location.hash.replace("#", "");
     if (hash === "citas") {
       renderAppointments({ historyMode: "none" });
+    } else if (hash === "asesores") {
+      renderAdvisors({ historyMode: "none" });
     } else if (hash && data.areas.some(area => area.id === hash)) {
       renderArea(hash, null, { historyMode: "none" });
     } else {
@@ -298,6 +354,8 @@
   const initialView = location.hash.replace("#", "");
   if (initialView === "citas") {
     renderAppointments({ historyMode: "replace" });
+  } else if (initialView === "asesores") {
+    renderAdvisors({ historyMode: "replace" });
   } else if (initialView && data.areas.some(area => area.id === initialView)) {
     renderArea(initialView, null, { historyMode: "replace" });
   } else {
