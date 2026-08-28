@@ -11,9 +11,9 @@
 <body>
   <main class="page-shell">
     <section class="hero" aria-labelledby="page-title">
-      <div class="hero-media" role="img" aria-label="Toyota Campeche">
-  <div class="hero-overlay"></div>
-</div>
+      <div class="hero-media" role="img" aria-label="Fachada de Toyota Campeche">
+        <div class="hero-overlay"></div>
+      </div>
 
       <div class="brand-panel">
         <div class="brand-kicker">TOYOTA</div>
@@ -27,90 +27,25 @@
         <span class="quick-icon" data-icon="location"></span>
         <span>Ubicación</span>
       </a>
-      <a class="quick-action" id="quick-phone" href="#">
+      <button class="quick-action quick-button" type="button" data-jump-area="comercial" data-jump-contact="recepcion">
         <span class="quick-icon" data-icon="phone"></span>
         <span>Recepción</span>
-      </a>
-      <a class="quick-action" id="quick-whatsapp" href="#" target="_blank" rel="noreferrer">
-        <span class="quick-icon whatsapp" data-icon="whatsapp"></span>
-        <span>WhatsApp</span>
-      </a>
+      </button>
+      <button class="quick-action quick-button" type="button" data-jump-area="postventa" data-jump-contact="citas">
+        <span class="quick-icon" data-icon="calendar"></span>
+        <span>Citas</span>
+      </button>
       <a class="quick-action" id="quick-web" href="#" target="_blank" rel="noreferrer">
         <span class="quick-icon" data-icon="globe"></span>
         <span>Sitio web</span>
       </a>
     </section>
 
-    <section class="directory-section" aria-labelledby="directory-title">
-      <div class="section-heading">
-        <p class="eyebrow">ATENCIÓN DIRECTA</p>
-        <h2 id="directory-title">¿Con qué departamento deseas comunicarte?</h2>
-      </div>
-
-      <label class="search-box" for="department-search">
-        <span class="search-icon" data-icon="search"></span>
-        <input id="department-search" type="search" placeholder="Buscar departamento o persona" autocomplete="off" />
-      </label>
-
-      <div id="directory-grid" class="directory-grid" aria-live="polite"></div>
-      <p id="empty-state" class="empty-state" hidden>No encontramos un departamento con ese nombre.</p>
-    </section>
-
-    <section class="primary-actions">
-      <a class="button button-primary" id="save-general" href="#">
-        <span data-icon="contact"></span>
-        Guardar contacto general
-      </a>
-      <a class="button button-secondary" id="main-location" href="#" target="_blank" rel="noreferrer">
-        <span data-icon="location"></span>
-        Ver ubicación
-      </a>
-    </section>
-
-    <section class="about section-card">
-      <div class="about-icon" data-icon="shield"></div>
-      <div>
-        <p class="eyebrow">TOYOTA CAMPECHE</p>
-        <h2>Todo el equipo, en un solo lugar</h2>
-        <p>Encuentra rápidamente al área que necesitas y comunícate por llamada, WhatsApp o correo.</p>
-      </div>
-    </section>
-
-    <section class="message-card section-card" aria-labelledby="message-title">
-      <div class="section-heading compact">
-        <p class="eyebrow">CONTACTO</p>
-        <h2 id="message-title">Déjanos un mensaje</h2>
-        <p>Este formulario abre WhatsApp con tu mensaje listo para enviar.</p>
-      </div>
-      <form id="contact-form" class="contact-form">
-        <div class="form-row">
-          <label>
-            <span>Nombre</span>
-            <input required name="name" type="text" placeholder="Tu nombre" />
-          </label>
-          <label>
-            <span>Teléfono</span>
-            <input name="phone" type="tel" placeholder="981 000 0000" />
-          </label>
-        </div>
-        <label>
-          <span>Departamento</span>
-          <select id="department-select" name="department"></select>
-        </label>
-        <label>
-          <span>Mensaje</span>
-          <textarea required name="message" rows="4" placeholder="Escribe tu mensaje..."></textarea>
-        </label>
-        <button class="button button-primary full" type="submit">
-          <span data-icon="send"></span>
-          Enviar por WhatsApp
-        </button>
-      </form>
-    </section>
+    <section id="app-view" class="app-view" aria-live="polite"></section>
 
     <footer>
-      <p><strong>Toyota Campeche</strong> · Directorio interno editable</p>
-      <p class="footer-note">Los nombres y números de esta versión son de ejemplo.</p>
+      <p><strong>Toyota Campeche</strong> · Directorio digital</p>
+      <p class="footer-note">Los nombres y datos de esta versión son de ejemplo y pueden editarse en data.js.</p>
     </footer>
   </main>
 
