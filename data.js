@@ -18,7 +18,7 @@ const asesorVenta = (numero) => ({
 window.TOYOTA_CAMPECHE_DATA = {
   agency: {
     name: "Toyota Campeche",
-    website: "https://www.toyotacampeche.mx/",
+    website: "https://www.toyotacampeche.com.mx/",
     mapsUrl: "https://maps.google.com/?q=Toyota+Campeche"
   },
 
