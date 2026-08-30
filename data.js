@@ -90,7 +90,7 @@ const salesAdvisors = [
   {
     id: "asesor-12",
     role: "Asesor de Venta",
-    person: "Irving Gibram Burgos Morales,
+    person: "Irving Gibram Burgos Morales",
     whatsapp: "9993921784",
     email: "asesor12@ejemplo.com"
   },
