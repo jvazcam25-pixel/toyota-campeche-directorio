@@ -286,6 +286,45 @@
     document.querySelector(".search-leading-icon").innerHTML = icon("search");
   }
 
+  function setupPrivacyModal() {
+    const modal = document.getElementById("privacy-modal");
+    if (!modal || modal.dataset.ready === "true") return;
+    modal.dataset.ready = "true";
+
+    let lastFocused = null;
+
+    const openModal = trigger => {
+      lastFocused = trigger || document.activeElement;
+      modal.hidden = false;
+      document.body.classList.add("privacy-modal-open");
+      requestAnimationFrame(() => modal.querySelector(".privacy-close")?.focus());
+    };
+
+    const closeModal = () => {
+      modal.hidden = true;
+      document.body.classList.remove("privacy-modal-open");
+      if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+    };
+
+    document.addEventListener("click", event => {
+      const open = event.target.closest("[data-open-privacy]");
+      if (open) {
+        event.preventDefault();
+        openModal(open);
+        return;
+      }
+
+      if (event.target.closest("[data-close-privacy]")) {
+        event.preventDefault();
+        closeModal();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && !modal.hidden) closeModal();
+    });
+  }
+
   function setupFeedbackForm() {
     const form = document.getElementById("feedback-form");
     if (!form) return;
@@ -432,8 +471,15 @@
             <label for="feedback-website">Sitio web</label>
             <input id="feedback-website" name="website" type="text" tabindex="-1" autocomplete="off" />
           </div>
+          <div class="privacy-consent feedback-field-full">
+            <label class="privacy-check" for="feedback-privacy-consent">
+              <input id="feedback-privacy-consent" name="privacy_consent" type="checkbox" value="Aceptado" required />
+              <span>He leído y conozco el <button class="privacy-inline-link" type="button" data-open-privacy>Aviso de Privacidad</button>.</span>
+            </label>
+            <p>Los datos proporcionados serán utilizados para atender y dar seguimiento a tu comentario, queja o sugerencia.</p>
+          </div>
           <div class="feedback-submit-row">
-            <p class="feedback-privacy">Al enviar, tus datos serán utilizados para atender tu mensaje. El correo permitirá que Atención a Clientes pueda responderte directamente.</p>
+            <p class="feedback-privacy">El correo electrónico permitirá que Atención a Clientes pueda responderte directamente.</p>
             <button class="feedback-submit" type="submit">${icon("send")}<span>Enviar mensaje</span></button>
           </div>
           <p id="feedback-status" class="feedback-status" role="status" aria-live="polite"></p>
@@ -636,6 +682,7 @@
     }
   });
 
+  setupPrivacyModal();
   setupQuickActions();
   setupDirectorySearch();
 

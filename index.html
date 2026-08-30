@@ -91,6 +91,7 @@
 
     <footer>
       <p><strong>Toyota Campeche</strong> · Directorio digital</p>
+      <button class="footer-privacy-link" type="button" data-open-privacy>Aviso de Privacidad</button>
     </footer>
   </main>
 
@@ -101,13 +102,27 @@
     </button>
     <button class="mobile-bar-item" type="button" data-jump-area="comercial" data-jump-contact="gerente-atencion-clientes">
       <span class="mobile-bar-icon" data-icon="headset"></span>
-      <span>Atención a clientes</span>
+      <span>Atención</span>
     </button>
     <a class="mobile-bar-item mobile-facebook" id="mobile-facebook" href="#" target="_blank" rel="noreferrer">
       <span class="mobile-bar-icon" data-icon="facebook"></span>
       <span>Facebook</span>
     </a>
   </nav>
+
+
+  <div class="privacy-modal" id="privacy-modal" hidden>
+    <div class="privacy-backdrop" data-close-privacy></div>
+    <section class="privacy-dialog" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+      <button class="privacy-close" type="button" data-close-privacy aria-label="Cerrar aviso de privacidad">×</button>
+      <p class="eyebrow">PRIVACIDAD</p>
+      <h2 id="privacy-title">Aviso de Privacidad</h2>
+      <p>CALIDAD DE CAMPECHE, S. DE R.L. DE C.V. es responsable del tratamiento de los datos personales proporcionados.</p>
+      <p>En este buzón se solicitan nombre, teléfono, correo electrónico y comentarios para atender y dar seguimiento a consultas, quejas, sugerencias o reclamaciones.</p>
+      <p>La información será tratada conforme al Aviso de Privacidad Integral de Toyota Campeche.</p>
+      <a class="privacy-pdf-link" href="assets/aviso-privacidad.pdf" target="_blank" rel="noreferrer">Consultar Aviso de Privacidad Integral (PDF)</a>
+    </section>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="data.js"></script>

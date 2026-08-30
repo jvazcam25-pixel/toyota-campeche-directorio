@@ -782,3 +782,134 @@ footer p { margin: 4px 0; }
   .feedback-icon { width: 48px; height: 48px; font-size: 23px; }
   .feedback-heading h3 { font-size: 21px; }
 }
+
+
+/* V10: Aviso de Privacidad y consentimiento del buzón */
+.privacy-consent {
+  display: grid;
+  gap: 7px;
+  padding: 13px 14px;
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  background: var(--gray-050);
+}
+
+.privacy-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--gray-800);
+  font-size: 12px;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.privacy-check input {
+  flex: 0 0 auto;
+  width: 17px;
+  height: 17px;
+  margin: 1px 0 0;
+  accent-color: var(--toyota-red);
+}
+
+.privacy-consent > p {
+  margin: 0 0 0 27px;
+  color: var(--gray-500);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.privacy-inline-link,
+.footer-privacy-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--toyota-red);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer-privacy-link {
+  margin-top: 7px;
+  font-size: 12px;
+}
+
+.privacy-modal[hidden] { display: none; }
+
+.privacy-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.privacy-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(5px);
+}
+
+.privacy-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 620px);
+  max-height: min(78vh, 680px);
+  overflow: auto;
+  padding: 30px;
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 26px 70px rgba(0,0,0,.26);
+}
+
+.privacy-dialog h2 {
+  margin: 0 44px 18px 0;
+  font-size: clamp(26px, 5vw, 34px);
+  line-height: 1.08;
+}
+
+.privacy-dialog p:not(.eyebrow) {
+  margin: 0 0 14px;
+  color: var(--gray-700);
+  line-height: 1.6;
+}
+
+.privacy-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--gray-100);
+  color: var(--gray-700);
+  font-size: 25px;
+  line-height: 1;
+}
+
+.privacy-pdf-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 8px;
+  padding: 11px 16px;
+  border-radius: 12px;
+  background: var(--toyota-red);
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+body.privacy-modal-open { overflow: hidden; }
+
+@media (max-width: 440px) {
+  .privacy-dialog { padding: 24px 20px; border-radius: 20px; }
+  .privacy-consent > p { margin-left: 0; }
+}
