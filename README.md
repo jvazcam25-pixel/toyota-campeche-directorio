@@ -1,36 +1,103 @@
-# Toyota Campeche · Directorio V5
+# Toyota Campeche · Directorio V9
 
-Cambios incluidos en esta versión:
+Esta versión cambia el envío del Buzón de Quejas y Sugerencias de Resend a **EmailJS**.
 
-- Rediseño más limpio y compacto para móvil.
-- Logo en portada preparado como **JPG** (`assets/toyota-logo.jpg`).
-- Accesos rápidos: Ubicación, Atención, Citas, Sitio web y Facebook.
-- Barra inferior fija en móvil: **Citas | Atención | Facebook**.
-- Sección independiente de **Asesores de Venta** con 13 tarjetas.
-- En Área Comercial se agregó un acceso directo para abrir la pestaña de Asesores.
-- Sección final con horarios de **Ventas, Servicio y Refacciones**.
+## Qué cambia
 
-## Archivos principales
+- Ya no se usa `/api/feedback.js`.
+- Ya no necesitas variables de entorno en Vercel para el buzón.
+- El formulario se envía directamente mediante EmailJS.
+- El correo del usuario puede configurarse como `Reply-To` en la plantilla de EmailJS.
+- Puedes configurar BCC al Gerente General desde la plantilla de EmailJS.
+- Se mantiene el buscador, áreas, asesores, horarios, accesos y diseño de la V8.
+
+## Archivos que debes sustituir en GitHub
 
 - `index.html`
-- `styles.css`
 - `data.js`
 - `app.js`
-- `assets/agencia.jpg`
-- `assets/toyota-logo.jpg`
+- `styles.css`
 
-## Qué editar normalmente
+También puedes reemplazar los demás archivos para mantener la versión completa sincronizada.
 
-Abre `data.js` y cambia:
-- nombres
-- teléfonos
-- WhatsApp
-- correos
+### Importante
 
-## Reemplazar el logo
+Elimina de GitHub la carpeta antigua:
 
-Si ya cuentas con el archivo oficial, sustituye:
+`api/feedback.js`
 
-`assets/toyota-logo.jpg`
+Ya no se utiliza en V9.
 
-por tu versión final, conservando el mismo nombre.
+## Configuración de EmailJS
+
+Después de crear tu cuenta de EmailJS necesitas tres datos:
+
+- Service ID
+- Template ID
+- Public Key
+
+Abre `data.js` y busca:
+
+```js
+emailjs: {
+  serviceId: "TU_SERVICE_ID",
+  templateId: "TU_TEMPLATE_ID",
+  publicKey: "TU_PUBLIC_KEY"
+},
+```
+
+Reemplaza esos tres valores por los datos reales de EmailJS.
+
+## Variables que manda el formulario
+
+La plantilla de EmailJS recibe:
+
+- `{{name}}`
+- `{{phone}}`
+- `{{email}}`
+- `{{comments}}`
+- `{{time}}`
+
+### Plantilla recomendada
+
+**To Email:** correo real de Atención a Clientes
+
+**From Name:** Toyota Campeche - Buzón Web
+
+**From Email:** usa la dirección por defecto del servicio conectado
+
+**Reply-To:**
+
+`{{email}}`
+
+**BCC:** correo real del Gerente General
+
+**Subject:**
+
+`Nueva queja o sugerencia - {{name}}`
+
+**Contenido:**
+
+```text
+Nueva queja o sugerencia recibida desde el Directorio Toyota Campeche.
+
+Nombre: {{name}}
+Teléfono: {{phone}}
+Correo: {{email}}
+Fecha y hora: {{time}}
+
+Comentarios:
+{{comments}}
+```
+
+## Seguridad
+
+La Public Key de EmailJS está diseñada para utilizarse en el navegador. No coloques contraseñas, tokens privados ni claves privadas en `data.js`.
+
+La V9 también incluye:
+
+- campo oculto antispam básico (honeypot)
+- bloqueo de navegadores headless mediante EmailJS
+- límite cliente de una solicitud cada 10 segundos
+
+Para una publicación masiva se recomienda añadir reCAPTCHA V2 desde EmailJS si empieza a recibirse spam.

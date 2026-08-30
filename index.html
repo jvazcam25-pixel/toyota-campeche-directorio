@@ -44,6 +44,15 @@
       </a>
     </section>
 
+    <section class="directory-search-wrap" aria-label="Buscar en el directorio">
+      <div class="directory-search section-card">
+        <span class="search-leading-icon" data-icon="search"></span>
+        <input id="directory-search-input" type="search" autocomplete="off" placeholder="Buscar área o persona..." aria-label="Buscar área o nombre de persona" />
+        <button id="directory-search-clear" class="search-clear" type="button" aria-label="Limpiar búsqueda" hidden>×</button>
+      </div>
+      <div id="directory-search-results" class="search-results" hidden></div>
+    </section>
+
     <section id="app-view" class="app-view" aria-live="polite"></section>
 
     <section class="hours-section section-card" aria-labelledby="horarios-title">
@@ -92,7 +101,7 @@
     </button>
     <button class="mobile-bar-item" type="button" data-jump-area="comercial" data-jump-contact="gerente-atencion-clientes">
       <span class="mobile-bar-icon" data-icon="headset"></span>
-      <span>Atención a clientes</span>
+      <span>Atención</span>
     </button>
     <a class="mobile-bar-item mobile-facebook" id="mobile-facebook" href="#" target="_blank" rel="noreferrer">
       <span class="mobile-bar-icon" data-icon="facebook"></span>
@@ -100,6 +109,7 @@
     </a>
   </nav>
 
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>

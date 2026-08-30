@@ -19,7 +19,10 @@
     back: '<path d="m15 18-6-6 6-6"/>',
     arrow: '<path d="m9 18 6-6-6-6"/>',
     user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
-    team: '<circle cx="9" cy="9" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3.5 20a6 6 0 0 1 11 0"/><path d="M14 20a4.7 4.7 0 0 1 6.5-4.3"/>'
+    team: '<circle cx="9" cy="9" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3.5 20a6 6 0 0 1 11 0"/><path d="M14 20a4.7 4.7 0 0 1 6.5-4.3"/>',
+    search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
+    message: '<path d="M21 15a4 4 0 0 1-4 4H8l-5 3 1.5-5A7 7 0 0 1 3 13V8a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v7Z"/>',
+    send: '<path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/>'
   };
 
   const icon = (name, className = "") => `<svg class="${className}" viewBox="0 0 24 24" aria-hidden="true">${iconPaths[name] || iconPaths.user}</svg>`;
@@ -141,6 +144,226 @@
     `;
   }
 
+
+  function buildSearchIndex() {
+    const items = [];
+
+    data.areas.forEach(area => {
+      items.push({
+        type: "area",
+        title: area.name,
+        subtitle: area.subtitle,
+        icon: area.icon,
+        terms: `${area.name} ${area.subtitle}`,
+        areaId: area.id
+      });
+
+      (area.groups || []).forEach(group => {
+        (group.contacts || []).forEach(contact => {
+          items.push({
+            type: "contact",
+            title: contact.person,
+            subtitle: contact.role,
+            icon: contact.icon || "user",
+            terms: `${contact.person} ${contact.role} ${group.title} ${area.name}`,
+            areaId: area.id,
+            contactId: contact.id
+          });
+        });
+
+        (group.nestedGroups || []).forEach(nested => {
+          (nested.contacts || []).forEach(contact => {
+            items.push({
+              type: "contact",
+              title: contact.person,
+              subtitle: contact.role,
+              icon: contact.icon || "user",
+              terms: `${contact.person} ${contact.role} ${nested.title} ${group.title} ${area.name}`,
+              areaId: area.id,
+              contactId: contact.id
+            });
+          });
+        });
+      });
+    });
+
+    (data.advisors || []).forEach(contact => {
+      items.push({
+        type: "advisor",
+        title: contact.person,
+        subtitle: contact.role,
+        icon: "user",
+        terms: `${contact.person} ${contact.role} asesor venta comercial`,
+        contactId: contact.id
+      });
+    });
+
+    return items;
+  }
+
+  const normalize = (value = "") => String(value)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+
+  const searchIndex = buildSearchIndex();
+
+  function openSearchResult(item) {
+    if (item.type === "area") {
+      renderArea(item.areaId);
+    } else if (item.type === "advisor") {
+      renderAdvisors({ historyMode: "push", contactId: item.contactId });
+    } else {
+      renderArea(item.areaId, item.contactId);
+    }
+    clearSearch();
+  }
+
+  function clearSearch() {
+    const input = document.getElementById("directory-search-input");
+    const results = document.getElementById("directory-search-results");
+    const clear = document.getElementById("directory-search-clear");
+    if (input) input.value = "";
+    if (results) {
+      results.hidden = true;
+      results.innerHTML = "";
+    }
+    if (clear) clear.hidden = true;
+  }
+
+  function setupDirectorySearch() {
+    const input = document.getElementById("directory-search-input");
+    const results = document.getElementById("directory-search-results");
+    const clear = document.getElementById("directory-search-clear");
+    if (!input || !results || !clear) return;
+
+    const renderResults = () => {
+      const query = normalize(input.value);
+      clear.hidden = !query;
+
+      if (query.length < 2) {
+        results.hidden = true;
+        results.innerHTML = "";
+        return;
+      }
+
+      const matches = searchIndex
+        .filter(item => normalize(item.terms).includes(query))
+        .slice(0, 8);
+
+      results.innerHTML = matches.length ? matches.map((item, index) => `
+        <button class="search-result" type="button" data-search-index="${index}">
+          <span class="search-result-icon">${icon(item.icon)}</span>
+          <span class="search-result-copy">
+            <strong>${esc(item.title)}</strong>
+            <small>${esc(item.subtitle)}</small>
+          </span>
+          <span class="search-result-arrow">${icon("arrow")}</span>
+        </button>
+      `).join("") : `
+        <div class="search-empty">
+          <strong>Sin resultados</strong>
+          <span>Prueba con el nombre de un área o persona.</span>
+        </div>
+      `;
+
+      results.hidden = false;
+      results.querySelectorAll("[data-search-index]").forEach(button => {
+        button.addEventListener("click", () => openSearchResult(matches[Number(button.dataset.searchIndex)]));
+      });
+    };
+
+    input.addEventListener("input", renderResults);
+    input.addEventListener("keydown", event => {
+      if (event.key === "Escape") clearSearch();
+    });
+    clear.addEventListener("click", () => {
+      clearSearch();
+      input.focus();
+    });
+
+    document.querySelector(".search-leading-icon").innerHTML = icon("search");
+  }
+
+  function setupFeedbackForm() {
+    const form = document.getElementById("feedback-form");
+    if (!form) return;
+
+    const button = form.querySelector("button[type='submit']");
+    const status = document.getElementById("feedback-status");
+    const config = data.emailjs || {};
+
+    const isConfigured = [config.serviceId, config.templateId, config.publicKey].every(value => {
+      return value && !String(value).startsWith("TU_");
+    });
+
+    if (!window.emailjs) {
+      status.className = "feedback-status error";
+      status.textContent = "No se pudo cargar el servicio de correo. Actualiza la página e intenta nuevamente.";
+      button.disabled = true;
+      return;
+    }
+
+    if (!isConfigured) {
+      status.className = "feedback-status error";
+      status.textContent = "El buzón todavía necesita configurar EmailJS en data.js.";
+      button.disabled = true;
+      return;
+    }
+
+    window.emailjs.init({
+      publicKey: config.publicKey,
+      blockHeadless: true,
+      limitRate: {
+        id: "toyota-campeche-feedback",
+        throttle: 10000
+      }
+    });
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      status.className = "feedback-status";
+
+      const honeypot = form.elements.website?.value?.trim();
+      if (honeypot) {
+        form.reset();
+        status.classList.add("success");
+        status.textContent = "Tu mensaje fue enviado a Atención a Clientes.";
+        return;
+      }
+
+      const timeField = form.elements.time;
+      if (timeField) {
+        timeField.value = new Intl.DateTimeFormat("es-MX", {
+          dateStyle: "full",
+          timeStyle: "short"
+        }).format(new Date());
+      }
+
+      status.textContent = "Enviando...";
+      button.disabled = true;
+
+      try {
+        await window.emailjs.sendForm(
+          config.serviceId,
+          config.templateId,
+          form
+        );
+
+        form.reset();
+        status.classList.add("success");
+        status.textContent = "Tu mensaje fue enviado a Atención a Clientes.";
+      } catch (error) {
+        console.error("EmailJS error:", error);
+        status.classList.add("error");
+        status.textContent = "No se pudo enviar el mensaje. Intenta nuevamente en unos momentos.";
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+
   function renderHome({ historyMode = "replace" } = {}) {
     const homeCards = [
       ...data.areas.map(area => ({ type: "area", id: area.id, name: area.name, subtitle: area.subtitle, icon: area.icon })),
@@ -176,6 +399,46 @@
           <p>Usa los accesos rápidos o entra a cada área para ver solo la información relevante.</p>
         </div>
       </section>
+
+      <section class="feedback-box section-card" id="buzon">
+        <div class="feedback-heading">
+          <span class="feedback-icon">${icon("message")}</span>
+          <div>
+            <p class="eyebrow">BUZÓN DE QUEJAS Y SUGERENCIAS</p>
+            <h3>Tu opinión nos ayuda a mejorar</h3>
+            <p>El mensaje se envía directamente al área de Atención a Clientes.</p>
+          </div>
+        </div>
+
+        <form id="feedback-form" class="feedback-form">
+          <input type="hidden" name="time" value="" />
+          <div class="feedback-field">
+            <label for="feedback-name">Nombre</label>
+            <input id="feedback-name" name="name" type="text" maxlength="100" autocomplete="name" required />
+          </div>
+          <div class="feedback-field">
+            <label for="feedback-phone">Teléfono</label>
+            <input id="feedback-phone" name="phone" type="tel" maxlength="25" autocomplete="tel" required />
+          </div>
+          <div class="feedback-field feedback-field-full">
+            <label for="feedback-email">Correo electrónico</label>
+            <input id="feedback-email" name="email" type="email" maxlength="160" autocomplete="email" placeholder="nombre@correo.com" required />
+          </div>
+          <div class="feedback-field feedback-field-full">
+            <label for="feedback-comments">Comentarios</label>
+            <textarea id="feedback-comments" name="comments" rows="5" maxlength="2500" required></textarea>
+          </div>
+          <div class="feedback-honeypot" aria-hidden="true">
+            <label for="feedback-website">Sitio web</label>
+            <input id="feedback-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <div class="feedback-submit-row">
+            <p class="feedback-privacy">Al enviar, tus datos serán utilizados para atender tu mensaje. El correo permitirá que Atención a Clientes pueda responderte directamente.</p>
+            <button class="feedback-submit" type="submit">${icon("send")}<span>Enviar mensaje</span></button>
+          </div>
+          <p id="feedback-status" class="feedback-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
     `;
 
     app.querySelectorAll("[data-target]").forEach(button => {
@@ -187,6 +450,8 @@
         renderArea(button.dataset.target);
       });
     });
+
+    setupFeedbackForm();
 
     if (historyMode === "push") {
       history.pushState({ view: "home" }, "", location.pathname + location.search);
@@ -243,7 +508,7 @@
     });
   }
 
-  function renderAppointments({ historyMode = "push" } = {}) {
+  function renderAppointments({ historyMode = "push", contactId = null } = {}) {
     const appointments = data.appointments || [];
     document.title = "Citas · Toyota Campeche";
 
@@ -277,10 +542,21 @@
       history.replaceState({ view: "appointments" }, "", "#citas");
     }
 
-    window.scrollTo({ top: Math.max(0, app.offsetTop - 20), behavior: "smooth" });
+    requestAnimationFrame(() => {
+      if (contactId) {
+        const target = document.getElementById(`contact-${contactId}`);
+        if (target) {
+          target.classList.add("contact-highlight");
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+          setTimeout(() => target.classList.remove("contact-highlight"), 1800);
+          return;
+        }
+      }
+      window.scrollTo({ top: Math.max(0, app.offsetTop - 20), behavior: "smooth" });
+    });
   }
 
-  function renderAdvisors({ historyMode = "push" } = {}) {
+  function renderAdvisors({ historyMode = "push", contactId = null } = {}) {
     const advisors = data.advisors || [];
     document.title = "Asesores de Venta · Toyota Campeche";
 
@@ -314,7 +590,18 @@
       history.replaceState({ view: "advisors" }, "", "#asesores");
     }
 
-    window.scrollTo({ top: Math.max(0, app.offsetTop - 20), behavior: "smooth" });
+    requestAnimationFrame(() => {
+      if (contactId) {
+        const target = document.getElementById(`contact-${contactId}`);
+        if (target) {
+          target.classList.add("contact-highlight");
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+          setTimeout(() => target.classList.remove("contact-highlight"), 1800);
+          return;
+        }
+      }
+      window.scrollTo({ top: Math.max(0, app.offsetTop - 20), behavior: "smooth" });
+    });
   }
 
   function setupQuickActions() {
@@ -350,6 +637,7 @@
   });
 
   setupQuickActions();
+  setupDirectorySearch();
 
   const initialView = location.hash.replace("#", "");
   if (initialView === "citas") {

@@ -53,6 +53,12 @@ window.TOYOTA_CAMPECHE_DATA = {
     facebook: "https://www.facebook.com/toyotacampeche"
   },
 
+  emailjs: {
+    serviceId: "TU_SERVICE_ID",
+    templateId: "TU_TEMPLATE_ID",
+    publicKey: "TU_PUBLIC_KEY"
+  },
+
   advisors: salesAdvisors,
   appointments: [citaServicio, citaVentas],
 
