@@ -54,9 +54,9 @@ window.TOYOTA_CAMPECHE_DATA = {
   },
 
   emailjs: {
-    serviceId: "TU_SERVICE_ID",
-    templateId: "TU_TEMPLATE_ID",
-    publicKey: "TU_PUBLIC_KEY"
+    serviceId: "service_4wcv4cf",
+    templateId: "template_yhvd7lr",
+    publicKey: "gtkVhLXO-VWyPXnma"
   },
 
   advisors: salesAdvisors,
