@@ -28,7 +28,7 @@ const salesAdvisors = Array.from({ length: 13 }, (_, index) => asesorVenta(index
 const citaVentas = {
   id: "cita-ventas",
   role: "Cita de Ventas",
-  person: "Asesor de citas de ventas",
+  person: "Area digital",
   phone: "9811231012",
   whatsapp: "9811231012",
   email: "citas.ventas@ejemplo.com",
@@ -38,10 +38,10 @@ const citaVentas = {
 const citaServicio = {
   id: "cita-servicio",
   role: "Cita de Servicio",
-  person: "Mariana Torres",
+  person: "Lic. Lizbeth Jazmin Barrancos Garcia",
   phone: "9811231011",
   whatsapp: "9811231011",
-  email: "citas.servicio@ejemplo.com",
+  email: "citas@toyotacampeche.com.mx",
   icon: "calendar"
 };
 
