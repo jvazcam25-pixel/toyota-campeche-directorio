@@ -9,21 +9,99 @@
   - Todos los demás: solo correo.
 */
 
-const asesorVenta = (numero) => {
-  const consecutivo = String(numero).padStart(2, "0");
-  const telefono = `98100001${consecutivo}`;
-
-  return {
-    id: `asesor-${consecutivo}`,
-    role: `Asesor de Venta ${consecutivo}`,
-    person: `Nombre del asesor ${consecutivo}`,
-    phone: telefono,
-    whatsapp: telefono,
-    email: `asesor${consecutivo}@ejemplo.com`
-  };
-};
-
-const salesAdvisors = Array.from({ length: 13 }, (_, index) => asesorVenta(index + 1));
+const salesAdvisors = [
+  {
+    id: "asesor-01",
+    role: "Asesor de Venta",
+    person: "Nombre asesor 01",
+    whatsapp: "9810000001",
+    email: "asesor01@ejemplo.com"
+  },
+  {
+    id: "asesor-02",
+    role: "Asesor de Venta",
+    person: "Nombre asesor 02",
+    whatsapp: "9810000002",
+    email: "asesor02@ejemplo.com"
+  },
+  {
+    id: "asesor-03",
+    role: "Asesor de Venta",
+    person: "Nombre asesor 03",
+    whatsapp: "9810000003",
+    email: "asesor03@ejemplo.com"
+  },
+  {
+    id: "asesor-04",
+    role: "Asesor de Venta",
+    person: "Nombre asesor 04",
+    whatsapp: "9810000004",
+    email: "asesor04@ejemplo.com"
+  },
+  {
+    id: "asesor-05",
+    role: "Asesor de Venta",
+    person: "Nombre asesor 05",
+    whatsapp: "9810000005",
+    email: "asesor05@ejemplo.com"
+  },
+  {
+    id: "asesor-06",
+    role: "Asesor de Venta",
+    person: "Nombre asesor 06",
+    whatsapp: "9810000006",
+    email: "asesor06@ejemplo.com"
+  },
+  {
+    id: "asesor-07",
+    role: "Asesor de Venta",
+    person: "Nombre asesor 07",
+    whatsapp: "9810000007",
+    email: "asesor07@ejemplo.com"
+  },
+  {
+    id: "asesor-08",
+    role: "Asesor de Venta",
+    person: "Nombre asesor 08",
+    whatsapp: "9810000008",
+    email: "asesor08@ejemplo.com"
+  },
+  {
+    id: "asesor-09",
+    role: "Asesor de Venta",
+    person: "Nombre asesor 09",
+    whatsapp: "9810000009",
+    email: "asesor09@ejemplo.com"
+  },
+  {
+    id: "asesor-10",
+    role: "Asesor de Venta",
+    person: "Nombre asesor 10",
+    whatsapp: "9810000010",
+    email: "asesor10@ejemplo.com"
+  },
+  {
+    id: "asesor-11",
+    role: "Asesor de Venta",
+    person: "Nombre asesor 11",
+    whatsapp: "9810000011",
+    email: "asesor11@ejemplo.com"
+  },
+  {
+    id: "asesor-12",
+    role: "Asesor de Venta",
+    person: "Nombre asesor 12",
+    whatsapp: "9810000012",
+    email: "asesor12@ejemplo.com"
+  },
+  {
+    id: "asesor-13",
+    role: "Asesor de Venta",
+    person: "Nombre asesor 13",
+    whatsapp: "9810000013",
+    email: "asesor13@ejemplo.com"
+  }
+];
 
 const citaVentas = {
   id: "cita-ventas",
