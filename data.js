@@ -76,8 +76,8 @@ window.TOYOTA_CAMPECHE_DATA = {
             {
               id: "gerente-general",
               role: "Gerente General",
-              person: "Lic. Alejandro Méndez",
-              email: "gerencia.general@ejemplo.com"
+              person: "Lic. Oscar Miguel Montejo Meillon",
+              email: "gerencia121@grupocruces.com.mx"
             }
           ]
         },
@@ -88,15 +88,15 @@ window.TOYOTA_CAMPECHE_DATA = {
             {
               id: "gerente-ventas",
               role: "Gerente de Ventas",
-              person: "Lic. Carlos Rodríguez",
-              email: "gerencia.ventas@ejemplo.com"
+              person: "Ing. Octavio Ismael Ceballos Garcia",
+              email: "jefe126@grupocruces.com.mx"
             },
             {
               id: "gerente-atencion-clientes",
               role: "Gerente de Atención a Clientes",
-              person: "Andrea Morales",
+              person: "Lic. Walther Ivan Rinfor Paat",
               phone: "9811231008",
-              email: "atencion.clientes@ejemplo.com",
+              email: "asistente123@grupocruces.com.mx",
               icon: "headset"
             }
           ],
@@ -126,8 +126,8 @@ window.TOYOTA_CAMPECHE_DATA = {
             {
               id: "gerente-financiamiento",
               role: "Gerente de Financiamiento",
-              person: "Roberto García",
-              email: "financiamiento@ejemplo.com"
+              person: "Lic. Omar Gonzalez Avila",
+              email: "fandi@toyotacampeche.com.mx"
             }
           ]
         },
@@ -138,8 +138,8 @@ window.TOYOTA_CAMPECHE_DATA = {
             {
               id: "gerente-administrativo",
               role: "Gerente Administrativo",
-              person: "C.P. María Hernández",
-              email: "administracion.comercial@ejemplo.com"
+              person: "Lic. Nancy Beatriz Huchin Moo",
+              email: "jefe121@grupocruces.com.mx"
             }
           ]
         }
@@ -159,8 +159,8 @@ window.TOYOTA_CAMPECHE_DATA = {
             {
               id: "gerente-postventa",
               role: "Gerente de Postventa",
-              person: "Ing. José Martínez",
-              email: "gerencia.postventa@ejemplo.com"
+              person: "Ing. Sergio Gabino Gallardo Ramirez",
+              email: "gerencia122@grupocruces.com.mx"
             }
           ]
         },
@@ -171,20 +171,20 @@ window.TOYOTA_CAMPECHE_DATA = {
             {
               id: "gerente-administrativo-postventa",
               role: "Gerente Administrativo de Postventa",
-              person: "Patricia Gómez",
-              email: "administracion.postventa@ejemplo.com"
+              person: "Lic. Sonia Nayeli Chable Uc",
+              email: "jefe123@grupocruces.com.mx"
             },
             {
               id: "gerente-refacciones",
               role: "Gerente de Refacciones",
-              person: "Juan Pérez",
-              email: "refacciones@ejemplo.com"
+              person: "Lic. Jose Oswaldo Huchin Piste",
+              email: "almacen@toyotacampeche.com.mx"
             },
             {
               id: "garantias",
               role: "Garantías",
-              person: "Daniel Ruiz",
-              email: "garantias@ejemplo.com"
+              person: "Lic. Anaeli Yazmin Cahuich Cahuich",
+              email: "garantias@toyotacampeche.com.mx"
             }
           ],
           nestedGroups: [
@@ -212,14 +212,14 @@ window.TOYOTA_CAMPECHE_DATA = {
             {
               id: "desarrollo-organizacional",
               role: "Desarrollo Organizacional",
-              person: "Sofía Hernández",
-              email: "desarrollo.organizacional@ejemplo.com"
+              person: "Lic. Katia Guadalupe Chavez Rivera",
+              email: "analista122@grupocruces.com.mx"
             },
             {
               id: "kaizen",
               role: "Kaizen",
-              person: "Miguel Sánchez",
-              email: "kaizen@ejemplo.com"
+              person: "Lic. Rosa Esther Mis Huchin",
+              email: "supervisor121@grupocruces.com.mx"
             }
           ]
         }
