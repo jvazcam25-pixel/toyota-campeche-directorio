@@ -13,92 +13,92 @@ const salesAdvisors = [
   {
     id: "asesor-01",
     role: "Asesor de Venta",
-    person: "Nombre asesor 01",
-    whatsapp: "9810000001",
-    email: "asesor01@ejemplo.com"
+    person: "Martha Rocha Segura",
+    whatsapp: "9811246065",
+    email: "ventas128@grupocruces.com.mx"
   },
   {
     id: "asesor-02",
     role: "Asesor de Venta",
-    person: "Nombre asesor 02",
-    whatsapp: "9810000002",
-    email: "asesor02@ejemplo.com"
+    person: "Emilio Miguel Olivares Sosa",
+    whatsapp: "9811527158",
+    email: "ventas122@grupocruces.com.mx"
   },
   {
     id: "asesor-03",
     role: "Asesor de Venta",
-    person: "Nombre asesor 03",
-    whatsapp: "9810000003",
-    email: "asesor03@ejemplo.com"
+    person: "Wilbert Martin Aguilar Aguilar",
+    whatsapp: "9811545158",
+    email: "ventas1212@grupocruces.com.mx"
   },
   {
     id: "asesor-04",
     role: "Asesor de Venta",
-    person: "Nombre asesor 04",
-    whatsapp: "9810000004",
-    email: "asesor04@ejemplo.com"
+    person: "Rafael Morales Peralta",
+    whatsapp: "9811128460",
+    email: "ventas123@grupocruces.com.mx"
   },
   {
     id: "asesor-05",
     role: "Asesor de Venta",
-    person: "Nombre asesor 05",
-    whatsapp: "9810000005",
-    email: "asesor05@ejemplo.com"
+    person: "Pedro de la Peña Vallejo Ventura",
+    whatsapp: "9811015003",
+    email: "ventas121@grupocruces.com.mx"
   },
   {
     id: "asesor-06",
     role: "Asesor de Venta",
-    person: "Nombre asesor 06",
-    whatsapp: "9810000006",
-    email: "asesor06@ejemplo.com"
+    person: "Pedro Candelario Puc Tun",
+    whatsapp: "9811756978",
+    email: "ventas1210@grupocruces.com.mx"
   },
   {
     id: "asesor-07",
     role: "Asesor de Venta",
-    person: "Nombre asesor 07",
-    whatsapp: "9810000007",
-    email: "asesor07@ejemplo.com"
+    person: "Ingris Suyapa Sosa Andino",
+    whatsapp: "9812030250",
+    email: "ventas129@grupocruces.com.mx"
   },
   {
     id: "asesor-08",
     role: "Asesor de Venta",
-    person: "Nombre asesor 08",
-    whatsapp: "9810000008",
+    person: "Flor de Li Santos Hernandez",
+    whatsapp: "9381643037",
     email: "asesor08@ejemplo.com"
   },
   {
     id: "asesor-09",
     role: "Asesor de Venta",
-    person: "Nombre asesor 09",
-    whatsapp: "9810000009",
+    person: "Jose Fernando Perez Escobar",
+    whatsapp: "9818183458",
     email: "asesor09@ejemplo.com"
   },
   {
     id: "asesor-10",
     role: "Asesor de Venta",
-    person: "Nombre asesor 10",
-    whatsapp: "9810000010",
-    email: "asesor10@ejemplo.com"
+    person: "Benito del Jesus Hernandez Chin",
+    whatsapp: "9818295145",
+    email: "ventas1211@grupocruces.com.mx"
   },
   {
     id: "asesor-11",
     role: "Asesor de Venta",
-    person: "Nombre asesor 11",
-    whatsapp: "9810000011",
-    email: "asesor11@ejemplo.com"
+    person: "Jorge Ruy Vazquez Cambranis",
+    whatsapp: "9994110816",
+    email: "ventas126@grupocruces.com.mx"
   },
   {
     id: "asesor-12",
     role: "Asesor de Venta",
-    person: "Nombre asesor 12",
-    whatsapp: "9810000012",
+    person: "Irving Gibram Burgos Morales,
+    whatsapp: "9993921784",
     email: "asesor12@ejemplo.com"
   },
   {
     id: "asesor-13",
     role: "Asesor de Venta",
-    person: "Nombre asesor 13",
-    whatsapp: "9810000013",
+    person: "Katia Berenice Zamarron Mederos",
+    whatsapp: "9811821348",
     email: "asesor13@ejemplo.com"
   }
 ];
