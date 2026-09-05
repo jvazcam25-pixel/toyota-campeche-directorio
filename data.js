@@ -11,6 +11,20 @@
 
 const salesAdvisors = [
   {
+    id: "asesor-12",
+    role: "Asesor de Venta Digital",
+    person: "Jorge Ruy Vazquez Cambranis",
+    whatsapp: "9994110816",
+    email: "ventas126@grupocruces.com.mx"
+  },
+  {
+    id: "asesor-13",
+    role: "Asesor de Venta Digital",
+    person: "Katia Berenice Zamarron Mederos",
+    whatsapp: "9811821348",
+    email: "asesor13@ejemplo.com"
+  },
+  {
     id: "asesor-01",
     role: "Asesor de Venta",
     person: "Martha Rocha Segura",
@@ -83,23 +97,9 @@ const salesAdvisors = [
   {
     id: "asesor-11",
     role: "Asesor de Venta",
-    person: "Jorge Ruy Vazquez Cambranis",
-    whatsapp: "9994110816",
-    email: "ventas126@grupocruces.com.mx"
-  },
-  {
-    id: "asesor-12",
-    role: "Asesor de Venta",
     person: "Irving Gibram Burgos Morales",
     whatsapp: "9993921784",
     email: "ventas1214@grupocruces.com.mx"
-  },
-  {
-    id: "asesor-13",
-    role: "Asesor de Venta",
-    person: "Katia Berenice Zamarron Mederos",
-    whatsapp: "9811821348",
-    email: "asesor13@ejemplo.com"
   }
 ];
 
@@ -107,8 +107,9 @@ const citaVentas = {
   id: "cita-ventas",
   role: "Cita de Ventas",
   person: "Area digital",
-  phone: "9811231012",
-  whatsapp: "9811231012",
+  phone: "9811273000,,101",
+  whatsapp: "981578747",
+  whatsapp: "9812084241",
   email: "citas.ventas@ejemplo.com",
   icon: "calendar"
 };
