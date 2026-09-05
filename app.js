@@ -82,7 +82,12 @@
         <div class="contact-copy">
           <p class="contact-role">${esc(contact.role)}</p>
           <h4>${esc(contact.person)}</h4>
-          ${contact.phone ? `<p class="contact-phone">${esc(formatPhone(contact.phone))}</p>` : ""}
+          ${contact.phone ? `
+  <p class="contact-phone">
+    ${esc(formatPhone(contact.phone))}
+    ${contact.extension ? ` · Ext. ${esc(contact.extension)}` : ""}
+  </p>
+` : ""}
           <div class="contact-actions">${contactActions(contact)}</div>
         </div>
       </article>
