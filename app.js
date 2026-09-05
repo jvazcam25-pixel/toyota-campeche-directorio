@@ -44,14 +44,14 @@
   function contactActions(contact) {
     const actions = [];
 
-    if (contact.phone) {
-      actions.push(`
-        <a class="contact-action" href="tel:${cleanPhone(contact.phone)};ext=${contact.extension}">
-          ${icon("phone")}
-          <span>Llamar</span>
-        </a>
-      `);
-    }
+ if (contact.phone) {
+  actions.push(`
+    <a class="contact-action" href="tel:+52${cleanPhone(contact.phone)}">
+      ${icon("phone")}
+      <span>Llamar</span>
+    </a>
+  `);
+}
 
     if (contact.whatsapp) {
       actions.push(`
