@@ -46,7 +46,7 @@
 
     if (contact.phone) {
       actions.push(`
-        <a class="contact-action" href="tel:${cleanPhone(contact.phone)}">
+        <a class="contact-action" href="tel:${cleanPhone(contact.phone)};ext=${contact.extension}">
           ${icon("phone")}
           <span>Llamar</span>
         </a>
