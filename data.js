@@ -107,7 +107,7 @@ const citaVentas = {
   id: "cita-ventas",
   role: "Cita de Ventas",
   person: "Area digital",
-  phone: "9811273000,,101",
+  phone: "9811273000",
   whatsapp: "981578747",
   whatsapp: "9812084241",
   email: "citas.ventas@ejemplo.com",
