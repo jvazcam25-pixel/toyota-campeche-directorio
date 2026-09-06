@@ -61,7 +61,15 @@
         </a>
       `);
     }
-
+if (contact.whatsapp2) {
+  actions.push(`
+    <a class="contact-action whatsapp" href="https://wa.me/52${cleanPhone(contact.whatsapp2)}" target="_blank" rel="noreferrer">
+      ${icon("whatsapp")}
+      <span>WhatsApp 2</span>
+    </a>
+  `);
+}
+    
     if (contact.email) {
       actions.push(`
         <a class="contact-action" href="mailto:${esc(contact.email)}">
