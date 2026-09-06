@@ -110,7 +110,6 @@ const citaVentas = {
   phone: "9811273000",
 extension: "101",
   whatsapp: "981578747",
-  whatsapp2: "9812084241",
   email: "citas.ventas@ejemplo.com",
   icon: "calendar"
 };
@@ -120,7 +119,8 @@ const citaServicio = {
   role: "Cita de Servicio",
   person: "Lic. Lizbeth Jazmin Barrancos Garcia",
   phone: "9811231011",
-  whatsapp: "9811231011",
+  whatsapp: "981578747",
+   whatsapp2: "9812084241",
   email: "citas@toyotacampeche.com.mx",
   icon: "calendar"
 };
